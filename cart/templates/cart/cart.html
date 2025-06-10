@@ -1,0 +1,49 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+	Cart
+{% endblock %}
+
+{% block content %}
+
+    <main class="main-cart">
+        <section class="cart-cards">
+            <h2>Shopping Cart</h2>
+            <div class="cards">
+                {% for item in cart %}
+                    {% with product=item.product %}
+                        <div class="card">
+                            <img src="{% if product.image %}{{ product.image.url }}{% else %}
+    {% static 'img/no-image.jpg' %}{% endif %}" alt="">
+                            <p>{{ product.name }}</p>
+                            <p>Quantity: {{ item.quantity }}</p>
+                            <form action="{% url "cart:cart_remove" product.id %}" method="post">
+                                <input type="submit" value="Remove" class="remove-btn">
+                                {% csrf_token %}
+                                {% if product.discount %}
+                                    <p>$ {{ product.price }}</p>
+                                    <p>$ {{ product.sell_price }}</p>
+                                {% else %}
+                                    <p>$ {{ product.price }}</p>
+                                {% endif %}
+                            </form>
+                        </div>
+                    {% endwith %}
+                {% endfor %}
+            </div>
+        </section>
+        <aside class="total">
+        <h2>Total sum: $ {{ cart.get_total_price }}</h2>
+        <a href="/shop">Continue Shopping</a>
+        {% with cart_quantity=cart|length %}
+            {% if cart_quantity > 0 %}
+                <a href="#">Checkout</a>
+            {% endif %}
+        {% endwith %}
+    </aside>
+    </main>
+
+
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+	Home
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <h1>Popular Products</h1>
+        <div class="products">
+            {% for i in products %}
+                <div class="product">
+                    <img src="{% if i.image %}{{ i.image.url }}{% else %}{% static 'img/no-image.jpg' %}{% endif %}"
+                      alt="">
+                 <a href="{{ i.get_absolute_url }}">{{ i.name }}</a>
+                 <p>{{ i.price }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

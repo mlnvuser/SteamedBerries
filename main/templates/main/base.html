@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+
+    <div class="wrapper">
+
+        <header class="header">
+
+            <nav class="navigation-menu">
+                <a href="{% url 'main:popular_products' %}">Home</a>
+                <a href="{% url 'main:product_list' %}">Shop</a>
+            </nav>
+
+            <a href=""><img src="{% static 'img/logo.jpg' %}" class="logo" alt=""></a>
+
+            <div class="auth">
+                <a href="{% url 'cart:cart_detail' %}">Cart</a>
+                <a href="{% url 'cart:cart_detail' %}">
+                    {% with cart_quantity=cart|length %}
+                        {% if cart_quantity > 0 %}
+                            {{ cart_quantity }}
+                        {% else %}
+                            0
+                        {% endif %}
+                    {% endwith %}
+                </a>
+                <a href="#">Log in</a>
+            </div>
+
+        </header>
+
+        <main class="main">
+            {% block content %}
+
+            {% endblock %}
+        </main>
+
+        <footer class="footer">
+            <span class="contact-information">
+                Contact information
+            </span>
+        </footer>
+
+    </div>
+
+</body>
+</html>
