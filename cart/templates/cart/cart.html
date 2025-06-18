@@ -38,7 +38,7 @@
         <a href="/shop">Continue Shopping</a>
         {% with cart_quantity=cart|length %}
             {% if cart_quantity > 0 %}
-                <a href="#">Checkout</a>
+                <a href="{% url 'orders:order_create' %}">Checkout</a>
             {% endif %}
         {% endwith %}
     </aside>
